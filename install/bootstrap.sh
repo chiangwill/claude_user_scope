@@ -96,6 +96,16 @@ link "$REPO_DIR/MANIFEST.md" "$CLAUDE_DIR/MANIFEST.md"
 link "$REPO_DIR/README.md"   "$CLAUDE_DIR/README.md"
 link "$REPO_DIR/.gitignore"  "$CLAUDE_DIR/.gitignore"
 
+# Per-skill symlinks (don't touch third-party skills like gstack/caveman)
+mkdir -p "$CLAUDE_DIR/skills"
+if [[ -d "$REPO_DIR/skills" ]]; then
+  for skill_dir in "$REPO_DIR/skills"/*/; do
+    [[ -d "$skill_dir" ]] || continue
+    skill_name="$(basename "$skill_dir")"
+    link "$skill_dir" "$CLAUDE_DIR/skills/$skill_name"
+  done
+fi
+
 log "Done."
 log "Next: open Claude Code, then run inside it:"
 log "  /plugin marketplace add JuliusBrussee/caveman"

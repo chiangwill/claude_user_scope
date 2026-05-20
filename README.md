@@ -58,6 +58,14 @@ Or ask Claude: **"用 env-sync snapshot"**.
 
 Add new one: drop `agents/<name>.md`, commit, push. New machine picks it up via `git pull`.
 
+## Skills (your own)
+
+Put each skill in `skills/<name>/SKILL.md`. `bootstrap.sh` symlinks each into `~/.claude/skills/<name>` (won't touch gstack/caveman or other third-party skills already installed).
+
+Third-party skills:
+- `gstack` — update via `/gstack-upgrade` or `cd ~/.claude/skills/gstack && git pull && ./setup`
+- `caveman` — update via `/plugin update caveman@caveman`
+
 ## Layout
 
 ```
@@ -69,11 +77,13 @@ Add new one: drop `agents/<name>.md`, commit, push. New machine picks it up via 
 ├── agents/
 │   ├── cheap-lookup.md
 │   └── env-sync.md
-└── install/
-    ├── bootstrap.sh
-    ├── brew-formula.txt
-    ├── brew-cask.txt
-    └── npm-global.txt
+├── install/
+│   ├── bootstrap.sh
+│   ├── brew-formula.txt
+│   ├── brew-cask.txt
+│   └── npm-global.txt
+└── skills/
+    └── <your-skill>/SKILL.md
 
 ~/.claude/                     ← Claude Code reads here
 ├── agents      → ~/dotclaude/agents
