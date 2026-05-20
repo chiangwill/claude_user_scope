@@ -1,0 +1,38 @@
+# Runtime / 個人對話 — 別 commit
+sessions/
+projects/
+history.jsonl
+todos/
+tasks/
+telemetry/
+metrics/
+statsig/
+shell-snapshots/
+paste-cache/
+file-history/
+debug/
+cache/
+backups/
+homunculus/
+session-env/
+ide/
+*.bak
+stats-cache.json
+policy-limits.json
+
+# Plugin runtime — 新機跑 bootstrap.sh 重建
+plugins/cache/
+plugins/repos/
+plugins/marketplaces/
+plugins/blocklist.json
+plugins/install-counts-cache.json
+plugins/config.json
+
+# Skills 多為 plugin 安裝的 symlink — 重裝 plugin 自動恢復
+skills/
+
+# Hooks 來自 caveman plugin
+hooks/
+
+# Local-only settings
+settings.local.json

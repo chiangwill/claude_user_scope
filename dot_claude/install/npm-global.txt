@@ -1,0 +1,7 @@
+@anthropic-ai/claude-code
+@fission-ai/openspec
+@google/gemini-cli
+corepack
+mcp-chrome-bridge
+npm
+pm2
