@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Pull latest changes from remote.
+# Usage: pull
+set -euo pipefail
+
+repo="${REPO_DIR:-$HOME/dotclaude}"
+cd "$repo"
+git pull

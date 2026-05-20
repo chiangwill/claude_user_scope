@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Create a new skill in the dotclaude repo + symlink into ~/.claude/skills/.
+# Usage: add-skill <name>
+set -euo pipefail
+
+name="${1:?usage: add-skill <name>}"
+repo="${REPO_DIR:-$HOME/dotclaude}"
+dir="$repo/skills/$name"
+link="$HOME/.claude/skills/$name"
+
+if [[ -e "$dir" ]]; then
+  echo "error: $dir already exists" >&2
+  exit 1
+fi
+if [[ -e "$link" && ! -L "$link" ]]; then
+  echo "error: $link exists and is not a symlink — refusing to overwrite" >&2
+  exit 1
+fi
+
+mkdir -p "$dir"
+cat > "$dir/SKILL.md" <<EOF
+---
+name: $name
+description: TODO — when this skill should be used.
+allowed-tools:
+  - Bash
+  - Read
+---
+
+# $name
+
+TODO: skill body. Describe what the skill does and how to invoke it.
+EOF
+
+# Create per-skill symlink (skills/ is mixed real+symlinks, can't link the parent)
+mkdir -p "$HOME/.claude/skills"
+ln -sfn "$dir" "$link"
+
+echo "Created:    $dir/SKILL.md"
+echo "Symlinked:  $link → $dir"
+echo ""
+echo "Edit:  \$EDITOR $dir/SKILL.md"
+echo "Sync:  dotclaude sync \"feat: add $name skill\""

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Stage, commit, and push all changes in the dotclaude repo.
+# Usage: sync [commit message]
+set -euo pipefail
+
+repo="${REPO_DIR:-$HOME/dotclaude}"
+cd "$repo"
+
+if [[ -z "$(git status --porcelain)" ]]; then
+  echo "Nothing to sync."
+  exit 0
+fi
+
+msg="${*:-update}"
+git add -A
+git commit -m "$msg"
+git push
+echo "Pushed: $msg"

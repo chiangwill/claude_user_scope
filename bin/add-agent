@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Create a new subagent in the dotclaude repo.
+# Usage: add-agent <name>
+set -euo pipefail
+
+name="${1:?usage: add-agent <name>}"
+repo="${REPO_DIR:-$HOME/dotclaude}"
+file="$repo/agents/$name.md"
+
+if [[ -e "$file" ]]; then
+  echo "error: $file already exists" >&2
+  exit 1
+fi
+
+mkdir -p "$repo/agents"
+cat > "$file" <<EOF
+---
+name: $name
+description: TODO — when this agent should be used (main agent decides based on this).
+tools: Bash, Read, Glob, Grep
+model: haiku
+---
+
+TODO: system prompt body. Tell the agent what its job is, rules, and good/bad task examples.
+EOF
+
+echo "Created: $file"
+echo "(No symlink needed — agents/ is already a directory symlink.)"
+echo ""
+echo "Edit:  \$EDITOR $file"
+echo "Sync:  dotclaude sync \"feat: add $name agent\""
