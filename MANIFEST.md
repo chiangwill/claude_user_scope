@@ -2,7 +2,7 @@
 
 Snapshot of installed tools. Used by `env-sync` agent to restore on new machines.
 
-**Last updated:** 2026-05-20
+**Last updated:** 2026-05-25
 
 ---
 
@@ -15,6 +15,7 @@ Snapshot of installed tools. Used by `env-sync` agent to restore on new machines
 | Claude Code | `npm install -g @anthropic-ai/claude-code` |
 | gstack (skills) | `git clone https://github.com/garrytan/gstack.git ~/.claude/skills/gstack && cd ~/.claude/skills/gstack && ./setup` |
 | caveman (plugin) | `curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh \| bash` |
+| understand-anything (plugin) | Installed via marketplace Lum1104/Understand-Anything |
 
 ## Tracked package lists
 
@@ -51,11 +52,14 @@ None yet. Drop new ones into `~/.claude/skills/<name>/SKILL.md`.
 - `anthropics/claude-plugins-official`
 - `affaan-m/everything-claude-code`
 - `JuliusBrussee/caveman`
+- `Lum1104/Understand-Anything`
 
 Re-add on new machine inside Claude Code:
 ```
 /plugin marketplace add anthropics/claude-plugins-official
 /plugin marketplace add affaan-m/everything-claude-code
 /plugin marketplace add JuliusBrussee/caveman
+/plugin marketplace add Lum1104/Understand-Anything
 /plugin install caveman@caveman
+/plugin install understand-anything@Lum1104
 ```
