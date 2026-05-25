@@ -28,11 +28,9 @@ plugins/blocklist.json
 plugins/install-counts-cache.json
 plugins/config.json
 
-# Skills 多為 plugin 安裝的 symlink — 重裝 plugin 自動恢復
-skills/
-
-# Hooks 來自 caveman plugin
-hooks/
+# NOTE: this .gitignore is for the dotclaude *repo*. skills/ and hooks/ here
+# are our own custom files that DO need to be tracked. They were excluded by
+# mistake when this file was copied from ~/.claude/.gitignore.
 
 # Local-only settings
 settings.local.json
