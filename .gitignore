@@ -36,3 +36,6 @@ hooks/
 
 # Local-only settings
 settings.local.json
+
+# macOS
+.DS_Store
