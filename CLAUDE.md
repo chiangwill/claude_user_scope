@@ -46,3 +46,4 @@
 - 破壞性指令（rm -rf、reset --hard、force push）先問再做
 - 不繞過 hook、簽章、CI 檢查
 - 不假裝跑過測試。沒跑就說沒跑
+- Dotfile / config 跨機同步：預設 `clone + symlink + bootstrap.sh`，不用 chezmoi/stow，除非有 templating / secrets / 跨 OS 需求 <!-- from memory: prefer-simple-dotfile-sync -->
