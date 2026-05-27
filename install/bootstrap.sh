@@ -5,7 +5,7 @@
 #   1. Install Homebrew + brew packages
 #   2. Install nvm + Node LTS + npm globals
 #   3. Install gstack + caveman
-#   4. Symlink ~/.claude/{agents,install,CLAUDE.md,MANIFEST.md,README.md,.gitignore}
+#   4. Symlink ~/.claude/{agents,install,CLAUDE.md,RTK.md,MANIFEST.md,README.md,.gitignore}
 #      to this repo (so all machines share the same source via git)
 #
 # Run AFTER cloning this repo:
@@ -92,6 +92,7 @@ link() {
 link "$REPO_DIR/agents"      "$CLAUDE_DIR/agents"
 link "$REPO_DIR/install"     "$CLAUDE_DIR/install"
 link "$REPO_DIR/CLAUDE.md"   "$CLAUDE_DIR/CLAUDE.md"
+link "$REPO_DIR/RTK.md"      "$CLAUDE_DIR/RTK.md"
 link "$REPO_DIR/MANIFEST.md" "$CLAUDE_DIR/MANIFEST.md"
 link "$REPO_DIR/README.md"   "$CLAUDE_DIR/README.md"
 link "$REPO_DIR/.gitignore"  "$CLAUDE_DIR/.gitignore"
