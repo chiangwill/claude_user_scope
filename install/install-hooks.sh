@@ -62,8 +62,50 @@ add_pretooluse_hook() {
   log "Added PreToolUse[$matcher] → $(basename "$script")"
 }
 
+# Add a SessionStart hook (no matcher — fires on every session start).
+# Idempotent: skips if any existing SessionStart entry already references the script.
+add_sessionstart_hook() {
+  local script="$1" timeout="${2:-5}" status_msg="${3:-}"
+  local cmd
+  case "$script" in
+    *.js) cmd="\"$NODE_BIN\" \"$script\"" ;;
+    *)    cmd="bash \"$script\"" ;;
+  esac
+
+  if jq -e --arg s "$script" '
+    (.hooks.SessionStart // [])
+    | map(.hooks[]?.command // "")
+    | flatten
+    | any(. | contains($s))
+  ' "$SETTINGS" >/dev/null; then
+    log "SessionStart already wired to $(basename "$script") — skip"
+    return 0
+  fi
+
+  backup
+  local tmp
+  tmp="$(mktemp)"
+  jq --arg cmd "$cmd" --argjson timeout "$timeout" --arg msg "$status_msg" '
+    .hooks = (.hooks // {})
+    | .hooks.SessionStart = (.hooks.SessionStart // [])
+    | .hooks.SessionStart += [{
+        hooks: [
+          (
+            { type: "command", command: $cmd, timeout: $timeout }
+            + (if $msg == "" then {} else { statusMessage: $msg } end)
+          )
+        ]
+      }]
+  ' "$SETTINGS" > "$tmp"
+  mv "$tmp" "$SETTINGS"
+  log "Added SessionStart → $(basename "$script")"
+}
+
 # ---------- Hooks managed by this repo ----------
 
-add_pretooluse_hook "Agent" "$REPO_DIR/hooks/agent-budget.js" 5
+# Self-heal must run first so a stale node path gets fixed before any
+# node-based hook in this repo executes (effect lands on next session).
+add_sessionstart_hook "$REPO_DIR/hooks/selfheal-hook-paths.sh" 5 "Healing hook paths..."
+add_pretooluse_hook   "Agent" "$REPO_DIR/hooks/agent-budget.js" 5
 
 log "Done. Restart Claude Code session for changes to take effect."
