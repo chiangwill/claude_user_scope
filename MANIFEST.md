@@ -46,6 +46,17 @@ See `agents/`:
 - `cheap-lookup` — Haiku, read-only repo lookups
 - `env-sync` — snapshot / diff / restore env
 
+## Custom hooks
+
+See `hooks/`:
+- `agent-budget.js` — PreToolUse circuit breaker for Agent tool (default 10/session, override `CLAUDE_AGENT_BUDGET`)
+- `evolve-reminder.sh` — SessionStart memory-promotion nudge
+
+Wired into `~/.claude/settings.json` by `install/install-hooks.sh` (idempotent, called from `bootstrap.sh`). Re-run after adding a new hook entry:
+```bash
+bash ~/dotclaude/install/install-hooks.sh
+```
+
 ## Custom skills (not from marketplace)
 
 None yet. Drop new ones into `~/.claude/skills/<name>/SKILL.md`.
