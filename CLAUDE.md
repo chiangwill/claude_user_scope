@@ -24,6 +24,7 @@
 - 一個 commit 一件事，不混雜
 - 不 `--amend` 已 push 的 commit
 - 不 `--force` push 到 main
+- 不加 `Co-Authored-By: Claude ...` / `Generated with Claude Code` 之類 trailer（內建範本會塞，要主動拿掉）
 
 ## Python
 
