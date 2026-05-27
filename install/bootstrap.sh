@@ -107,7 +107,13 @@ if [[ -d "$REPO_DIR/skills" ]]; then
   done
 fi
 
-# ---------- 7. Generate post-install command block ----------
+# ---------- 7. Wire up hooks into settings.json ----------
+if [[ -x "$REPO_DIR/install/install-hooks.sh" ]]; then
+  log "Installing hooks into settings.json..."
+  "$REPO_DIR/install/install-hooks.sh" || warn "install-hooks.sh failed (non-fatal)"
+fi
+
+# ---------- 8. Generate post-install command block ----------
 POST_INSTALL="$REPO_DIR/install/post-install.txt"
 {
   echo "# Run these inside Claude Code (generated $(date '+%Y-%m-%d %H:%M'))"
