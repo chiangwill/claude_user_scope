@@ -1,4 +1,5 @@
 @anthropic-ai/claude-code
+@colbymchenry/codegraph
 @fission-ai/openspec
 @google/gemini-cli
 corepack

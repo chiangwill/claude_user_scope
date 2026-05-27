@@ -1,0 +1,54 @@
+autoplan
+benchmark
+benchmark-models
+browse
+canary
+careful
+cavecrew -> ../../.agents/skills/cavecrew
+caveman -> ../../.agents/skills/caveman
+caveman-commit -> ../../.agents/skills/caveman-commit
+caveman-compress -> ../../.agents/skills/caveman-compress
+caveman-help -> ../../.agents/skills/caveman-help
+caveman-review -> ../../.agents/skills/caveman-review
+caveman-stats -> ../../.agents/skills/caveman-stats
+codex
+connect-chrome
+context-restore
+context-save
+cso
+design-consultation
+design-html
+design-review
+design-shotgun
+devex-review
+document-release
+dotclaude -> /Users/a1234/dotclaude/skills/dotclaude
+freeze
+gstack
+gstack-upgrade
+gstack.bak
+guard
+health
+investigate
+land-and-deploy
+landing-report
+learn
+learned
+make-pdf
+office-hours
+open-gstack-browser
+pair-agent
+plan-ceo-review
+plan-design-review
+plan-devex-review
+plan-eng-review
+plan-tune
+qa
+qa-only
+retro
+review
+setup-browser-cookies
+setup-deploy
+setup-gbrain
+ship
+unfreeze

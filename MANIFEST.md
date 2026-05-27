@@ -2,7 +2,7 @@
 
 Snapshot of installed tools. Used by `env-sync` agent to restore on new machines.
 
-**Last updated:** 2026-05-25
+**Last updated:** 2026-05-27
 
 ---
 
@@ -20,8 +20,11 @@ Snapshot of installed tools. Used by `env-sync` agent to restore on new machines
 ## Tracked package lists
 
 - `install/brew-formula.txt` — brew formulae (159)
-- `install/brew-cask.txt` — brew casks
-- `install/npm-global.txt` — npm globals
+- `install/brew-cask.txt` — brew casks (2)
+- `install/npm-global.txt` — npm globals (8)
+- `install/claude-skills.txt` — claude skills (54)
+- `install/plugins.txt` — Claude Code plugins (3)
+- `install/marketplaces.txt` — Claude Code marketplaces (5)
 
 ## One-shot restore
 
@@ -47,12 +50,9 @@ See `agents/`:
 
 None yet. Drop new ones into `~/.claude/skills/<name>/SKILL.md`.
 
-## Marketplaces (Claude Code plugin registry)
+## Marketplaces & plugins (Claude Code plugin registry)
 
-- `anthropics/claude-plugins-official`
-- `affaan-m/everything-claude-code`
-- `JuliusBrussee/caveman`
-- `Lum1104/Understand-Anything`
+See `install/marketplaces.txt` and `install/plugins.txt`.
 
 Re-add on new machine inside Claude Code:
 ```
@@ -60,6 +60,8 @@ Re-add on new machine inside Claude Code:
 /plugin marketplace add affaan-m/everything-claude-code
 /plugin marketplace add JuliusBrussee/caveman
 /plugin marketplace add Lum1104/Understand-Anything
+/plugin marketplace add thedotmack/claude-mem
 /plugin install caveman@caveman
-/plugin install understand-anything@Lum1104
+/plugin install understand-anything@understand-anything
+/plugin install claude-mem@thedotmack
 ```

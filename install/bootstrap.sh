@@ -106,7 +106,31 @@ if [[ -d "$REPO_DIR/skills" ]]; then
   done
 fi
 
+# ---------- 7. Generate post-install command block ----------
+POST_INSTALL="$REPO_DIR/install/post-install.txt"
+{
+  echo "# Run these inside Claude Code (generated $(date '+%Y-%m-%d %H:%M'))"
+  if [[ -f "$REPO_DIR/install/marketplaces.txt" ]]; then
+    while IFS= read -r repo; do
+      [[ -z "$repo" ]] && continue
+      echo "/plugin marketplace add $repo"
+    done < "$REPO_DIR/install/marketplaces.txt"
+  fi
+  if [[ -f "$REPO_DIR/install/plugins.txt" ]]; then
+    while IFS= read -r line; do
+      [[ -z "$line" ]] && continue
+      pkg="$(printf '%s' "$line" | awk '{print $1}')"
+      echo "/plugin install $pkg"
+    done < "$REPO_DIR/install/plugins.txt"
+  fi
+} > "$POST_INSTALL"
+
 log "Done."
-log "Next: open Claude Code, then run inside it:"
-log "  /plugin marketplace add JuliusBrussee/caveman"
-log "  /plugin install caveman@caveman"
+log "Plugin install commands written to: $POST_INSTALL"
+
+if command -v pbcopy >/dev/null 2>&1; then
+  pbcopy < "$POST_INSTALL"
+  log "Commands copied to clipboard (pbcopy). Open Claude Code, paste, run."
+else
+  log "Next: open Claude Code and paste contents of $POST_INSTALL"
+fi
