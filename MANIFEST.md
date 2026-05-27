@@ -19,8 +19,7 @@ Snapshot of installed tools. Used by `env-sync` agent to restore on new machines
 
 ## Tracked package lists
 
-- `install/brew-formula.txt` — brew formulae (159)
-- `install/brew-cask.txt` — brew casks (2)
+- `install/Brewfile` — brew formulae + casks + taps (25 entries, `brew leaves` only)
 - `install/npm-global.txt` — npm globals (8)
 - `install/claude-skills.txt` — claude skills (54)
 - `install/plugins.txt` — Claude Code plugins (3)

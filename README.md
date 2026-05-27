@@ -11,10 +11,11 @@ bash ~/dotclaude/install/bootstrap.sh
 ```
 
 `bootstrap.sh`:
-1. Installs Homebrew + 159 formulae + casks
+1. Installs Homebrew + entries from `install/Brewfile` (formulae + casks + taps)
 2. Installs nvm + Node LTS + npm globals
 3. Clones gstack + installs caveman
 4. Symlinks `~/.claude/*` → `~/dotclaude/*`
+5. Patches `settings.json` with managed hooks (`install/install-hooks.sh`)
 
 Then inside Claude Code:
 ```
@@ -43,8 +44,7 @@ That's it — symlinks pick up changes instantly.
 When you install new brew / npm packages on one machine and want to sync the lists:
 
 ```bash
-brew list --formula > ~/dotclaude/install/brew-formula.txt
-brew list --cask    > ~/dotclaude/install/brew-cask.txt
+brew bundle dump --file=~/dotclaude/install/Brewfile --force --formula --cask --tap
 npm ls -g --depth=0 --json | python3 -c "import sys,json; d=json.load(sys.stdin); print('\n'.join(d.get('dependencies',{}).keys()))" > ~/dotclaude/install/npm-global.txt
 cd ~/dotclaude && git add -A && git commit -m "snapshot env" && git push
 ```
@@ -79,8 +79,8 @@ Third-party skills:
 │   └── env-sync.md
 ├── install/
 │   ├── bootstrap.sh
-│   ├── brew-formula.txt
-│   ├── brew-cask.txt
+│   ├── install-hooks.sh
+│   ├── Brewfile
 │   └── npm-global.txt
 └── skills/
     └── <your-skill>/SKILL.md

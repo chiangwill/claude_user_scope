@@ -15,8 +15,7 @@ All under `~/.claude/install/`:
 
 | File | Source of truth |
 |------|-----------------|
-| `brew-formula.txt` | `brew list --formula` |
-| `brew-cask.txt` | `brew list --cask` |
+| `Brewfile` | `brew bundle dump` (formulae + casks + taps, leaves only) |
 | `npm-global.txt` | `npm ls -g --depth=0 --json` → top-level dep names |
 | `claude-skills.txt` | `ls ~/.claude/skills/` (filter dotfiles) |
 | `plugins.txt` | `~/.claude/plugins/installed_plugins.json` |
@@ -30,8 +29,7 @@ Determine mode from the prompt. Pick one:
 Regenerate every list from current machine state. Sort everything for diff stability.
 
 ```bash
-brew list --formula | sort > ~/.claude/install/brew-formula.txt
-brew list --cask    | sort > ~/.claude/install/brew-cask.txt
+brew bundle dump --file=~/.claude/install/Brewfile --force --formula --cask --tap
 
 npm ls -g --depth=0 --json 2>/dev/null \
   | python3 -c "import sys,json; d=json.load(sys.stdin); print('\n'.join(sorted(d.get('dependencies',{}).keys())))" \
@@ -67,14 +65,15 @@ Then update `~/dotclaude/MANIFEST.md`:
 - `Last updated:` date
 - Counts in the "Tracked package lists" section for every file above
 
-Report: `Snapshot updated. brew=N formulae, M casks. npm=K globals. skills=S. plugins=P. marketplaces=R.`
+Report: `Snapshot updated. Brewfile=N entries. npm=K globals. skills=S. plugins=P. marketplaces=R.`
 
 ### `diff`
 Compare current machine state to the saved lists. Report new/removed per category. Do NOT modify files.
 
 ```bash
-diff <(sort ~/.claude/install/brew-formula.txt) <(brew list --formula | sort)
-diff <(sort ~/.claude/install/brew-cask.txt)    <(brew list --cask | sort)
+brew bundle check --file=~/.claude/install/Brewfile --verbose || true
+# Lists Brewfile entries missing on this machine. To see what's installed but
+# not in Brewfile, run: brew bundle cleanup --file=~/.claude/install/Brewfile
 # repeat for npm-global, claude-skills, plugins, marketplaces using the same source-of-truth commands as snapshot
 ```
 
@@ -93,9 +92,8 @@ bash ~/dotclaude/install/bootstrap.sh
 Then list per-category manual fallback:
 
 ```
-# brew
-brew install $(cat ~/.claude/install/brew-formula.txt | tr '\n' ' ')
-brew install --cask $(cat ~/.claude/install/brew-cask.txt | tr '\n' ' ')
+# brew (formulae + casks + taps from Brewfile)
+brew bundle install --file=~/.claude/install/Brewfile
 
 # npm globals
 xargs -n1 npm install -g < ~/.claude/install/npm-global.txt

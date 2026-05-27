@@ -26,14 +26,9 @@ if ! command -v brew >/dev/null 2>&1; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-if [[ -f "$REPO_DIR/install/brew-formula.txt" ]]; then
-  log "Installing brew formulae..."
-  xargs brew install < "$REPO_DIR/install/brew-formula.txt" || warn "Some formulae failed"
-fi
-
-if [[ -f "$REPO_DIR/install/brew-cask.txt" ]]; then
-  log "Installing brew casks..."
-  xargs brew install --cask < "$REPO_DIR/install/brew-cask.txt" || warn "Some casks failed"
+if [[ -f "$REPO_DIR/install/Brewfile" ]]; then
+  log "Installing from Brewfile (formulae + casks + taps)..."
+  brew bundle install --file="$REPO_DIR/install/Brewfile" || warn "Some Brewfile entries failed"
 fi
 
 # ---------- 2. Node + nvm ----------
