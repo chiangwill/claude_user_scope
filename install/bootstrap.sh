@@ -20,6 +20,19 @@ CLAUDE_DIR="$HOME/.claude"
 log()  { printf '\033[1;34m[bootstrap]\033[0m %s\n' "$*"; }
 warn() { printf '\033[1;33m[warn]\033[0m %s\n' "$*" >&2; }
 
+# Run a step that is allowed to fail without aborting the bootstrap.
+# Usage: try "label" cmd args...   OR   try "label" bash -c "cmd1 && cmd2"
+try() {
+  local label="$1"; shift
+  if "$@"; then
+    return 0
+  else
+    local rc=$?
+    warn "$label failed (exit $rc), continuing"
+    return 0
+  fi
+}
+
 # ---------- 1. Homebrew ----------
 if ! command -v brew >/dev/null 2>&1; then
   log "Installing Homebrew..."
@@ -42,8 +55,8 @@ export NVM_DIR="$HOME/.nvm"
 
 if ! command -v node >/dev/null 2>&1; then
   log "Installing Node LTS..."
-  nvm install --lts
-  nvm use --lts
+  try "nvm install --lts" nvm install --lts
+  try "nvm use --lts"     nvm use --lts
 fi
 
 # ---------- 3. npm globals ----------
@@ -59,14 +72,16 @@ fi
 if [[ ! -d "$CLAUDE_DIR/skills/gstack" ]]; then
   log "Installing gstack..."
   mkdir -p "$CLAUDE_DIR/skills"
-  git clone https://github.com/garrytan/gstack.git "$CLAUDE_DIR/skills/gstack"
-  (cd "$CLAUDE_DIR/skills/gstack" && ./setup)
+  if try "gstack clone" git clone https://github.com/garrytan/gstack.git "$CLAUDE_DIR/skills/gstack" \
+     && [[ -d "$CLAUDE_DIR/skills/gstack" ]]; then
+    try "gstack setup" bash -c "cd '$CLAUDE_DIR/skills/gstack' && ./setup"
+  fi
 fi
 
 # ---------- 5. caveman (plugin) ----------
 if [[ ! -d "$HOME/.agents/skills/caveman" ]]; then
   log "Installing caveman..."
-  curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash
+  try "caveman install" bash -c "curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash"
 fi
 
 # ---------- 6. Symlink repo into ~/.claude ----------
