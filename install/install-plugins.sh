@@ -16,6 +16,12 @@ log()  { printf '\033[1;34m[install-plugins]\033[0m %s\n' "$*"; }
 warn() { printf '\033[1;33m[warn]\033[0m %s\n' "$*" >&2; }
 die()  { printf '\033[1;31m[error]\033[0m %s\n' "$*" >&2; exit 1; }
 
+# Source nvm so `claude` is on PATH when invoked from a non-interactive shell
+# (e.g. bootstrap.sh calling this script). Harmless if nvm not installed.
+if [[ -s "$HOME/.nvm/nvm.sh" ]]; then
+  # shellcheck disable=SC1091
+  . "$HOME/.nvm/nvm.sh"
+fi
 command -v claude >/dev/null 2>&1 || die "claude CLI not in PATH"
 
 # ---------- Marketplaces ----------
