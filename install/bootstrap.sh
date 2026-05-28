@@ -108,31 +108,10 @@ if [[ -x "$REPO_DIR/install/install-hooks.sh" ]]; then
   "$REPO_DIR/install/install-hooks.sh" || warn "install-hooks.sh failed (non-fatal)"
 fi
 
-# ---------- 8. Generate post-install command block ----------
-POST_INSTALL="$REPO_DIR/install/post-install.txt"
-{
-  echo "# Run these inside Claude Code (generated $(date '+%Y-%m-%d %H:%M'))"
-  if [[ -f "$REPO_DIR/install/marketplaces.txt" ]]; then
-    while IFS= read -r repo; do
-      [[ -z "$repo" ]] && continue
-      echo "/plugin marketplace add $repo"
-    done < "$REPO_DIR/install/marketplaces.txt"
-  fi
-  if [[ -f "$REPO_DIR/install/plugins.txt" ]]; then
-    while IFS= read -r line; do
-      [[ -z "$line" ]] && continue
-      pkg="$(printf '%s' "$line" | awk '{print $1}')"
-      echo "/plugin install $pkg"
-    done < "$REPO_DIR/install/plugins.txt"
-  fi
-} > "$POST_INSTALL"
+# ---------- 8. Register marketplaces + install plugins via claude CLI ----------
+if [[ -x "$REPO_DIR/install/install-plugins.sh" ]]; then
+  log "Registering marketplaces and installing plugins..."
+  "$REPO_DIR/install/install-plugins.sh" || warn "install-plugins.sh failed (non-fatal)"
+fi
 
 log "Done."
-log "Plugin install commands written to: $POST_INSTALL"
-
-if command -v pbcopy >/dev/null 2>&1; then
-  pbcopy < "$POST_INSTALL"
-  log "Commands copied to clipboard (pbcopy). Open Claude Code, paste, run."
-else
-  log "Next: open Claude Code and paste contents of $POST_INSTALL"
-fi

@@ -15,13 +15,10 @@ bash ~/dotclaude/install/bootstrap.sh
 2. Installs nvm + Node LTS + npm globals
 3. Clones gstack + installs caveman
 4. Symlinks `~/.claude/*` → `~/dotclaude/*`
-5. Patches `settings.json` with managed hooks (`install/install-hooks.sh`)
+5. Patches `settings.json` with managed hooks + portable permissions (`install/install-hooks.sh`)
+6. Registers marketplaces + installs plugins via `claude` CLI (`install/install-plugins.sh`)
 
-Then inside Claude Code:
-```
-/plugin marketplace add JuliusBrussee/caveman
-/plugin install caveman@caveman
-```
+No manual paste step. Re-running is safe — every installer is idempotent.
 
 ## Daily flow
 
@@ -80,8 +77,12 @@ Third-party skills:
 ├── install/
 │   ├── bootstrap.sh
 │   ├── install-hooks.sh
+│   ├── install-plugins.sh
 │   ├── Brewfile
-│   └── npm-global.txt
+│   ├── permissions-allow.txt
+│   ├── npm-global.txt
+│   ├── marketplaces.txt
+│   └── plugins.txt
 └── skills/
     └── <your-skill>/SKILL.md
 

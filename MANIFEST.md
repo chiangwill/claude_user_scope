@@ -66,14 +66,7 @@ None yet. Drop new ones into `~/.claude/skills/<name>/SKILL.md`.
 
 See `install/marketplaces.txt` and `install/plugins.txt`.
 
-Re-add on new machine inside Claude Code:
-```
-/plugin marketplace add anthropics/claude-plugins-official
-/plugin marketplace add affaan-m/everything-claude-code
-/plugin marketplace add JuliusBrussee/caveman
-/plugin marketplace add Lum1104/Understand-Anything
-/plugin marketplace add thedotmack/claude-mem
-/plugin install caveman@caveman
-/plugin install understand-anything@understand-anything
-/plugin install claude-mem@thedotmack
+New machine: `bootstrap.sh` calls `install/install-plugins.sh`, which drives the `claude plugin` CLI to register marketplaces and install plugins. Re-run any time the lists drift:
+```bash
+bash ~/dotclaude/install/install-plugins.sh
 ```

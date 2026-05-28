@@ -101,11 +101,8 @@ brew bundle install --file=~/.claude/install/Brewfile
 # npm globals
 xargs -n1 npm install -g < ~/.claude/install/npm-global.txt
 
-# Claude Code marketplaces + plugins (run inside Claude Code)
-# from ~/.claude/install/marketplaces.txt:
-/plugin marketplace add <repo>
-# from ~/.claude/install/plugins.txt:
-/plugin install <plugin@source>
+# Claude Code marketplaces + plugins (no manual paste — driven by claude CLI)
+bash ~/.claude/install/install-plugins.sh
 ```
 
 ## Rules
