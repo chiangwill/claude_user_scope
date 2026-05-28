@@ -63,6 +63,24 @@ Third-party skills:
 - `gstack` — update via `/gstack-upgrade` or `cd ~/.claude/skills/gstack && git pull && ./setup`
 - `caveman` — update via `/plugin update caveman@caveman`
 
+## Known limitations
+
+### Platform
+macOS only. `bootstrap.sh` assumes Homebrew, `pbcopy`, and BSD-flavored `stat`. Linux support is not wired (would need package-manager detection and a parallel install path). Adding it is straightforward but not done because there is no Linux machine in the current rotation.
+
+### Supply chain
+Three steps pull code over `curl | bash` without checksum pinning:
+- Homebrew install (`raw.githubusercontent.com/Homebrew/install/HEAD/install.sh`)
+- nvm install (pinned to tag `v0.40.1`, the only one of the three that is pinned)
+- caveman install (`raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh`)
+
+If any of these upstream repos gets compromised, bootstrap on a new machine would execute attacker code. Mitigations available if it ever feels worth it:
+- Mirror each install script into this repo and run the local copy
+- Pin Homebrew and caveman install URLs to specific commit hashes
+- Verify SHA-256 of the downloaded script before piping to `bash`
+
+For a single-user personal config this is currently an accepted risk.
+
 ## Layout
 
 ```

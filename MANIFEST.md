@@ -52,6 +52,7 @@ See `hooks/`:
 - `agent-budget.js` — PreToolUse circuit breaker for Agent tool (default 10/session, override `CLAUDE_AGENT_BUDGET`)
 - `evolve-reminder.sh` — SessionStart memory-promotion nudge
 - `selfheal-hook-paths.sh` — SessionStart auto-patches stale node paths in `settings.json` after nvm upgrades or machine moves
+- `dotclaude-nag.sh` — SessionStart reminder when `~/dotclaude` has uncommitted changes or unpushed commits (throttled to once per 24h, override `DOTCLAUDE_NAG_INTERVAL_HOURS`)
 
 Wired into `~/.claude/settings.json` by `install/install-hooks.sh` (idempotent, called from `bootstrap.sh`). Re-run after adding a new hook entry:
 ```bash

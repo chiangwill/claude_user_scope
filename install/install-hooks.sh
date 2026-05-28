@@ -153,6 +153,7 @@ merge_permissions_allow() {
 # Self-heal must run first so a stale node path gets fixed before any
 # node-based hook in this repo executes (effect lands on next session).
 add_sessionstart_hook "$REPO_DIR/hooks/selfheal-hook-paths.sh" 5 "Healing hook paths..."
+add_sessionstart_hook "$REPO_DIR/hooks/dotclaude-nag.sh"        5 "Checking dotclaude sync..."
 add_pretooluse_hook   "Agent" "$REPO_DIR/hooks/agent-budget.js" 5
 
 # ---------- Permissions managed by this repo ----------
