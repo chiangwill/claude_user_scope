@@ -1,0 +1,16 @@
+# Portable permissions.allow patterns, merged into ~/.claude/settings.local.json
+# by install-hooks.sh (union, idempotent).
+#
+# Format: one Claude Code permission pattern per line.
+# Skip ad-hoc one-offs (specific session IDs, custom awk columns).
+# Lines starting with # and blank lines are ignored.
+
+Bash(rtk git *)
+Bash(rtk grep *)
+Bash(rtk ls *)
+Bash(rtk find *)
+Bash(rtk read *)
+Bash(rtk wc *)
+Bash(python3 *)
+Bash(grep -v "^[[:space:]]*$")
+Read(//tmp/**)

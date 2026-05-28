@@ -101,11 +101,61 @@ add_sessionstart_hook() {
   log "Added SessionStart → $(basename "$script")"
 }
 
+# Merge portable permissions.allow patterns into ~/.claude/settings.local.json.
+# Idempotent (union, drops duplicates). Lines starting with # and blank lines
+# in the source file are ignored.
+merge_permissions_allow() {
+  local list="${1:-$REPO_DIR/install/permissions-allow.txt}"
+  local local_settings="$CLAUDE_DIR/settings.local.json"
+
+  [[ -f "$list" ]] || { log "no $list — skip"; return 0; }
+
+  local json_array
+  json_array=$(grep -Ev '^\s*(#|$)' "$list" | jq -R -s 'split("\n") | map(select(length > 0))')
+  if [[ -z "$json_array" || "$json_array" == "[]" ]]; then
+    log "$(basename "$list") empty — skip"
+    return 0
+  fi
+
+  if [[ ! -f "$local_settings" ]]; then
+    echo '{"permissions":{"allow":[]}}' > "$local_settings"
+  fi
+
+  local missing
+  missing=$(jq -r --argjson new "$json_array" '
+    ($new - (.permissions.allow // [])) | length
+  ' "$local_settings")
+
+  if [[ "$missing" -eq 0 ]]; then
+    log "permissions.allow already contains all patterns from $(basename "$list") — skip"
+    return 0
+  fi
+
+  cp "$local_settings" "$local_settings.bak.$(date +%s)"
+  local tmp
+  tmp="$(mktemp)"
+  jq --argjson new "$json_array" '
+    .permissions = (.permissions // {})
+    | .permissions.allow = ((.permissions.allow // []) + $new | unique)
+  ' "$local_settings" > "$tmp"
+
+  if [[ -s "$tmp" ]] && jq -e . "$tmp" >/dev/null 2>&1; then
+    mv "$tmp" "$local_settings"
+    log "merged $missing pattern(s) into permissions.allow"
+  else
+    rm -f "$tmp"
+    warn "jq output invalid, settings.local.json untouched"
+  fi
+}
+
 # ---------- Hooks managed by this repo ----------
 
 # Self-heal must run first so a stale node path gets fixed before any
 # node-based hook in this repo executes (effect lands on next session).
 add_sessionstart_hook "$REPO_DIR/hooks/selfheal-hook-paths.sh" 5 "Healing hook paths..."
 add_pretooluse_hook   "Agent" "$REPO_DIR/hooks/agent-budget.js" 5
+
+# ---------- Permissions managed by this repo ----------
+merge_permissions_allow
 
 log "Done. Restart Claude Code session for changes to take effect."

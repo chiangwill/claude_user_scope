@@ -24,6 +24,7 @@ Snapshot of installed tools. Used by `env-sync` agent to restore on new machines
 - `install/claude-skills.txt` — claude skills (54)
 - `install/plugins.txt` — Claude Code plugins (3)
 - `install/marketplaces.txt` — Claude Code marketplaces (5)
+- `install/permissions-allow.txt` — portable `permissions.allow` patterns merged into `settings.local.json` (9)
 
 ## One-shot restore
 

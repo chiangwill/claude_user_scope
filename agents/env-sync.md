@@ -20,6 +20,7 @@ All under `~/.claude/install/`:
 | `claude-skills.txt` | `ls ~/.claude/skills/` (filter dotfiles) |
 | `plugins.txt` | `~/.claude/plugins/installed_plugins.json` |
 | `marketplaces.txt` | `~/.claude/plugins/known_marketplaces.json` |
+| `permissions-allow.txt` | hand-curated subset of `~/.claude/settings.local.json` `permissions.allow` (portable patterns only — no session IDs, no ad-hoc one-offs) |
 
 ## Modes
 
@@ -64,6 +65,8 @@ print('\n'.join(sorted(rows)))
 Then update `~/dotclaude/MANIFEST.md`:
 - `Last updated:` date
 - Counts in the "Tracked package lists" section for every file above
+
+Note: `permissions-allow.txt` is **not** auto-regenerated. It is hand-curated. When asked, list the current `~/.claude/settings.local.json` `permissions.allow` patterns NOT yet in the file and ask the user which to promote. Skip machine-specific patterns (session UUIDs, ad-hoc awk columns).
 
 Report: `Snapshot updated. Brewfile=N entries. npm=K globals. skills=S. plugins=P. marketplaces=R.`
 
