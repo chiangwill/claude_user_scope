@@ -1,3 +1,4 @@
 caveman@caveman 18e45320a0b1
 claude-mem@thedotmack 13.3.0
 understand-anything@understand-anything 2.7.5
+webwright@webwright 0.1.0

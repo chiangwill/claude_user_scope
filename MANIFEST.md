@@ -22,8 +22,8 @@ Snapshot of installed tools. Used by `env-sync` agent to restore on new machines
 - `install/Brewfile` — brew formulae + casks + taps (25 entries, `brew leaves` only)
 - `install/npm-global.txt` — npm globals (8)
 - `install/claude-skills.txt` — claude skills (54)
-- `install/plugins.txt` — Claude Code plugins (3)
-- `install/marketplaces.txt` — Claude Code marketplaces (5)
+- `install/plugins.txt` — Claude Code plugins (4)
+- `install/marketplaces.txt` — Claude Code marketplaces (6)
 - `install/permissions-allow.txt` — portable `permissions.allow` patterns merged into `settings.local.json` (9)
 
 ## One-shot restore
