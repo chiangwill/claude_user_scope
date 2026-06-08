@@ -15,6 +15,7 @@
 - 預設不寫註解；只有 *why* 不明顯時才註解（不解釋 *what*）
 - 不過度抽象：三行重複 > 過早抽象
 - 不加錯誤處理給不會發生的 case；fail fast，邊界才 catch
+- 改 script 行為（邏輯、欄位、flag/usage）時，同一個 diff 裡一併更新 docstring/註解，不留舊描述 <!-- from memory: update-docstring-with-behavior -->
 
 ## Commit
 
@@ -45,6 +46,8 @@
 
 - 動手前先理解問題，不要 shotgun 改動
 - 破壞性指令（rm -rf、reset --hard、force push）先問再做
+- push / 開 PR / merge / 刪遠端 branch 等「變更 visible to others」的動作，執行那一刻再確認一次；早前訊息順帶提過不算當下授權 <!-- from memory: feedback_confirm_before_push -->
+- 不從資料長相（格式、前綴、命名）腦補語意或品質；不把 A library 的測試結果類推到 B。沒實證先別下判斷 <!-- from memory: feedback_id_mapping_no_inference -->
 - 不繞過 hook、簽章、CI 檢查
 - 不假裝跑過測試。沒跑就說沒跑
 - Dotfile / config 跨機同步：預設 `clone + symlink + bootstrap.sh`，不用 chezmoi/stow，除非有 templating / secrets / 跨 OS 需求 <!-- from memory: prefer-simple-dotfile-sync -->
