@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SessionStart hook: nag about unpromoted feedback memories.
+# SessionStart hook: nag about unpromoted feedback memories (across ALL projects).
 # Prints a short reminder to stdout (or nothing if quiet).
 #
 # Triggers when:
@@ -8,13 +8,13 @@
 
 set -euo pipefail
 
-MEMORY_DIR="$HOME/.claude/projects/-Users-a1234/memory"
+PROJECTS_DIR="$HOME/.claude/projects"
 NAG_FILE="$HOME/.claude/.last-evolve-nag"
 CLAUDE_MD="$HOME/.claude/CLAUDE.md"
 NAG_INTERVAL_DAYS="${EVOLVE_NAG_INTERVAL_DAYS:-7}"
 THRESHOLD="${EVOLVE_NAG_THRESHOLD:-3}"
 
-[[ -d "$MEMORY_DIR" ]] || exit 0
+[[ -d "$PROJECTS_DIR" ]] || exit 0
 
 # Throttle: skip if recently nagged
 if [[ -f "$NAG_FILE" ]]; then
@@ -28,7 +28,7 @@ fi
 # Collect feedback memories not referenced in CLAUDE.md
 unpromoted=()
 shopt -s nullglob
-for f in "$MEMORY_DIR"/*.md; do
+for f in "$PROJECTS_DIR"/*/memory/*.md; do
   [[ "$(basename "$f")" == "MEMORY.md" ]] && continue
   grep -q "type: feedback" "$f" 2>/dev/null || continue
   name=$(basename "$f" .md)

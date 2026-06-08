@@ -42,7 +42,7 @@ Tell the user:
 
 When the user runs `/dotclaude evolve`:
 
-1. Run `~/dotclaude/bin/evolve` — outputs all feedback-type memory files not referenced in `~/.claude/CLAUDE.md`.
+1. Run `~/dotclaude/bin/evolve` — outputs all feedback-type memory files (across ALL projects) not referenced in `~/.claude/CLAUDE.md`. Each entry's path shows which project it came from; project-specific feedback should usually be skipped, only cross-project rules promoted.
 2. For each memory listed, ask the user: **"Promote this to CLAUDE.md? (yes / no / edit)"**
    - **yes** → propose a concise rule to add to CLAUDE.md (in the appropriate section), edit the file, and reference the memory name in a comment so future evolve runs skip it (e.g. `<!-- from memory: prefer-simple-dotfile-sync -->`).
    - **no** → skip; leave the memory as-is.

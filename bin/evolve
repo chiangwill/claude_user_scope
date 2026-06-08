@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# List feedback memories not yet promoted to CLAUDE.md.
+# List feedback memories (across ALL projects) not yet promoted to CLAUDE.md.
 # Read-only — never edits files. The /dotclaude evolve skill uses this
 # output to walk the user through promotion interactively.
 #
@@ -7,17 +7,17 @@
 
 set -euo pipefail
 
-MEMORY_DIR="$HOME/.claude/projects/-Users-a1234/memory"
+PROJECTS_DIR="$HOME/.claude/projects"
 CLAUDE_MD="$HOME/.claude/CLAUDE.md"
 
-if [[ ! -d "$MEMORY_DIR" ]]; then
-  echo "No memory directory: $MEMORY_DIR"
+if [[ ! -d "$PROJECTS_DIR" ]]; then
+  echo "No projects directory: $PROJECTS_DIR"
   exit 0
 fi
 
 unpromoted=()
 shopt -s nullglob
-for f in "$MEMORY_DIR"/*.md; do
+for f in "$PROJECTS_DIR"/*/memory/*.md; do
   [[ "$(basename "$f")" == "MEMORY.md" ]] && continue
   grep -q "type: feedback" "$f" 2>/dev/null || continue
   name=$(basename "$f" .md)
