@@ -107,6 +107,11 @@ link "$REPO_DIR/MANIFEST.md" "$CLAUDE_DIR/MANIFEST.md"
 link "$REPO_DIR/README.md"   "$CLAUDE_DIR/README.md"
 link "$REPO_DIR/.gitignore"  "$CLAUDE_DIR/.gitignore"
 
+# caveman config lives in ~/.config (not ~/.claude); default off so sessions
+# start in normal prose — enable per-session with /caveman
+mkdir -p "$HOME/.config/caveman"
+link "$REPO_DIR/config/caveman/config.json" "$HOME/.config/caveman/config.json"
+
 # Per-skill symlinks (don't touch third-party skills like gstack/caveman)
 mkdir -p "$CLAUDE_DIR/skills"
 if [[ -d "$REPO_DIR/skills" ]]; then
