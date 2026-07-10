@@ -1,16 +1,10 @@
+_gstack-command
 autoplan
 benchmark
 benchmark-models
 browse
 canary
 careful
-cavecrew -> ../../.agents/skills/cavecrew
-caveman -> ../../.agents/skills/caveman
-caveman-commit -> ../../.agents/skills/caveman-commit
-caveman-compress -> ../../.agents/skills/caveman-compress
-caveman-help -> ../../.agents/skills/caveman-help
-caveman-review -> ../../.agents/skills/caveman-review
-caveman-stats -> ../../.agents/skills/caveman-stats
 codex
 connect-chrome
 context-restore
@@ -21,19 +15,24 @@ design-html
 design-review
 design-shotgun
 devex-review
+diagram
+document-generate
 document-release
-dotclaude -> /Users/a1234/dotclaude/skills/dotclaude
+dotclaude -> /Users/will/dotclaude/skills/dotclaude
 freeze
 gstack
 gstack-upgrade
-gstack.bak
 guard
 health
 investigate
+ios-clean
+ios-design-review
+ios-fix
+ios-qa
+ios-sync
 land-and-deploy
 landing-report
 learn
-learned
 make-pdf
 office-hours
 open-gstack-browser
@@ -47,8 +46,12 @@ qa
 qa-only
 retro
 review
+scrape
 setup-browser-cookies
 setup-deploy
 setup-gbrain
 ship
+skillify
+spec
+sync-gbrain
 unfreeze

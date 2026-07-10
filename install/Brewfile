@@ -1,25 +1,101 @@
+tap "homebrew/cask-fonts"
+tap "homebrew/services"
+# Utility to read Word (.doc) files
+brew "antiword"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# GNU File, Shell, and Text utilities
 brew "coreutils"
+# Modern, maintained replacement for ls
 brew "eza"
+# Simple, fast and user-friendly alternative to find
 brew "fd"
+# TIFF library and utilities
+brew "libtiff"
+# OCR (Optical Character Recognition) engine
+brew "tesseract"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg", link: false
+# Play, record, convert, and stream many audio and video codecs
 brew "ffmpeg-full", link: true
+# Command-line fuzzy finder written in Go
 brew "fzf"
+# GitHub command-line tool
 brew "gh"
+# Interpreter for PostScript and PDF
 brew "ghostscript"
+# Distributed revision control system
+brew "git"
+# Official GitLab CI runner
+brew "gitlab-runner"
+# Tool for glamorous shell scripts
 brew "gum"
-brew "imagemagick-full", link: true
-brew "ipython"
-brew "jq"
-brew "mcp-toolbox"
-brew "poppler"
-brew "python-tk@3.11"
+# Interpreted, interactive, object-oriented programming language
 brew "python@3.13"
+# User-friendly cURL replacement (command-line HTTP client)
+brew "httpie"
+# Tools and libraries to manipulate images in many formats
+brew "imagemagick-full", link: true
+# Interactive computing in Python
+brew "ipython"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# DNS library written in C
+brew "ldns"
+# Provides library functionality for FIDO U2F & FIDO 2.0, including USB
+brew "libfido2"
+# MCP server for databases
+brew "mcp-toolbox"
+# OpenBSD freely-licensed SSH connectivity tools
+brew "openssh"
+# Highly capable, feature-rich programming language
+brew "perl"
+# Display the PID number for a given process name
+brew "pidof"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
+# Object-relational database system
+brew "postgresql@14"
+# Implementation of Telnet and SSH
+brew "putty"
+# Python interface to Tcl/Tk
+brew "python-tk@3.11"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.10"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.9"
+# SVG rendering tool and library
 brew "resvg"
+# Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# CLI proxy to minimize LLM token consumption
 brew "rtk"
+# Terminal multiplexer with VT100/ANSI terminal emulation
+brew "screen"
+# 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
+# Generate scripting interfaces to C/C++ code
+brew "swig"
+# Command-line unarchiving tools supporting multiple formats
 brew "unar"
+# RTF to other formats converter
+brew "unrtf"
+# Vi 'workalike' with many additional features
+brew "vim"
+# Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
+# Shell extension to navigate your filesystem faster
 brew "zoxide"
+# UNIX shell (command interpreter)
+brew "zsh"
+# Fish shell like syntax highlighting for zsh
+brew "zsh-syntax-highlighting"
+cask "font-meslo-lg-nerd-font"
+cask "font-sauce-code-pro-nerd-font"
 cask "font-symbols-only-nerd-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Terminal emulator as alternative to Apple's Terminal app
+cask "iterm2"
+# Open-source version of the X.Org X Window System
+cask "xquartz"
