@@ -1,0 +1,8 @@
+[extend]
+useDefault = true
+
+# Add a [allowlist] section only once you have a confirmed false positive —
+# gitleaks fails to load this config if [allowlist] exists but is empty.
+# Example:
+# [allowlist]
+# regexes = ['''AKIA(FAKE|EXAMPLE)[0-9A-Z]{10}''']

@@ -55,6 +55,14 @@ Or ask Claude: **"用 env-sync snapshot"**.
 
 Add new one: drop `agents/<name>.md`, commit, push. New machine picks it up via `git pull`.
 
+## Hooks
+
+- `pii-secret-guard.sh` — PreToolUse hook (`Bash|Write|Edit`). Blocks tool calls whose command/content matches a secret (via `gitleaks`) or PII (via a local Presidio Analyzer). Requires `gitleaks` installed, plus `colima start` + `docker compose up -d` in `~/will/presidio` (runs `presidio-analyzer` on `localhost:5001`).
+  - **On/off switch**: `touch ~/.claude/pii-guard-enabled` to enable, `rm` it to disable. Takes effect on the next tool call, no restart needed. This file lives outside this repo on purpose — cloning dotclaude on another machine does NOT turn the guard on there; each machine starts disabled until you `touch` the file yourself.
+  - **False-positive overrides** (only after confirming a hit is not real): add a regex to `pii-allowlist.txt` (one per line, matched against the flagged substring) or to `gitleaks-allowlist.toml`'s `[allowlist]` block (gitleaks' native mechanism — do not leave this block present-but-empty, gitleaks fails to load the config if it is).
+
+Add new one: drop `hooks/<name>.sh`, wire it into `settings.json`'s `hooks` block, commit, push.
+
 ## Skills (your own)
 
 Put each skill in `skills/<name>/SKILL.md`. `bootstrap.sh` symlinks each into `~/.claude/skills/<name>` (won't touch gstack or other third-party skills already installed).
@@ -90,6 +98,11 @@ For a single-user personal config this is currently an accepted risk.
 ├── agents/
 │   ├── cheap-lookup.md
 │   └── env-sync.md
+├── hooks/
+│   ├── pii-secret-guard.sh
+│   ├── pii-allowlist.txt
+│   ├── gitleaks-allowlist.toml
+│   └── ...
 ├── install/
 │   ├── bootstrap.sh
 │   ├── install-hooks.sh

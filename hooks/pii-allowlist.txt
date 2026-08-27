@@ -1,0 +1,3 @@
+# One ERE regex per line, matched against the exact substring Presidio flagged.
+# Lines starting with # (or blank) are ignored.
+# Add a line here only after confirming a specific hit is a false positive.
