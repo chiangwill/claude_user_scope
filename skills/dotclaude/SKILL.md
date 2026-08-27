@@ -64,4 +64,3 @@ Print the table above and exit.
 - Never modify files outside `~/dotclaude/`.
 - Never force-push or rewrite history.
 - If `git push` fails (rejected, no remote), report the exact error — don't try `--force`.
-- Caveman caller? Mirror the style in your replies.

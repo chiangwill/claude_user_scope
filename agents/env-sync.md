@@ -111,4 +111,3 @@ bash ~/.claude/install/install-plugins.sh
 - Never delete a list file — only overwrite via Write.
 - Keep responses under 300 words.
 - If mode isn't clear, default to `diff` and ask which mode the user wants.
-- Caveman caller? Reply in caveman style (terse fragments, drop articles). Code blocks stay normal.

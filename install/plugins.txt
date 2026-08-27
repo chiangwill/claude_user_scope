@@ -1,4 +1,2 @@
-caveman@caveman 0d95a81d35a9
 claude-mem@thedotmack 13.10.2
-understand-anything@understand-anything 2.9.0
 webwright@webwright 0.1.0

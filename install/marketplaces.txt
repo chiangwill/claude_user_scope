@@ -1,5 +1,3 @@
-JuliusBrussee/caveman
-Lum1104/Understand-Anything
 affaan-m/everything-claude-code
 anthropics/claude-plugins-official
 microsoft/Webwright

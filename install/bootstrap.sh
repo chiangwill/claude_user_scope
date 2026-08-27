@@ -4,17 +4,19 @@
 # Flow:
 #   1. Install Homebrew + brew packages
 #   2. Install nvm + Node LTS + npm globals
-#   3. Install gstack + caveman
+#   3. Install gstack
 #   4. Symlink ~/.claude/{agents,install,CLAUDE.md,RTK.md,MANIFEST.md,README.md,.gitignore}
 #      to this repo (so all machines share the same source via git)
 #
-# Run AFTER cloning this repo:
+# Run AFTER cloning this repo (any path/depth works — REPO_DIR self-locates):
 #   git clone git@github.com:chiangwill/claude_user_scope.git ~/dotclaude
 #   bash ~/dotclaude/install/bootstrap.sh
 
 set -euo pipefail
 
-REPO_DIR="${REPO_DIR:-$HOME/dotclaude}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="${REPO_DIR:-$(dirname "$SCRIPT_DIR")}"
+export REPO_DIR
 CLAUDE_DIR="$HOME/.claude"
 
 log()  { printf '\033[1;34m[bootstrap]\033[0m %s\n' "$*"; }
@@ -78,13 +80,7 @@ if [[ ! -d "$CLAUDE_DIR/skills/gstack" ]]; then
   fi
 fi
 
-# ---------- 5. caveman (plugin) ----------
-if [[ ! -d "$HOME/.agents/skills/caveman" ]]; then
-  log "Installing caveman..."
-  try "caveman install" bash -c "curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash"
-fi
-
-# ---------- 6. Symlink repo into ~/.claude ----------
+# ---------- 5. Symlink repo into ~/.claude ----------
 log "Linking ~/.claude to $REPO_DIR ..."
 mkdir -p "$CLAUDE_DIR"
 
@@ -107,12 +103,7 @@ link "$REPO_DIR/MANIFEST.md" "$CLAUDE_DIR/MANIFEST.md"
 link "$REPO_DIR/README.md"   "$CLAUDE_DIR/README.md"
 link "$REPO_DIR/.gitignore"  "$CLAUDE_DIR/.gitignore"
 
-# caveman config lives in ~/.config (not ~/.claude); default off so sessions
-# start in normal prose — enable per-session with /caveman
-mkdir -p "$HOME/.config/caveman"
-link "$REPO_DIR/config/caveman/config.json" "$HOME/.config/caveman/config.json"
-
-# Per-skill symlinks (don't touch third-party skills like gstack/caveman)
+# Per-skill symlinks (don't touch gstack or other third-party skills)
 mkdir -p "$CLAUDE_DIR/skills"
 if [[ -d "$REPO_DIR/skills" ]]; then
   for skill_dir in "$REPO_DIR/skills"/*/; do
@@ -122,13 +113,13 @@ if [[ -d "$REPO_DIR/skills" ]]; then
   done
 fi
 
-# ---------- 7. Wire up hooks into settings.json ----------
+# ---------- 6. Wire up hooks into settings.json ----------
 if [[ -x "$REPO_DIR/install/install-hooks.sh" ]]; then
   log "Installing hooks into settings.json..."
   "$REPO_DIR/install/install-hooks.sh" || warn "install-hooks.sh failed (non-fatal)"
 fi
 
-# ---------- 8. Register marketplaces + install plugins via claude CLI ----------
+# ---------- 7. Register marketplaces + install plugins via claude CLI ----------
 if [[ -x "$REPO_DIR/install/install-plugins.sh" ]]; then
   log "Registering marketplaces and installing plugins..."
   "$REPO_DIR/install/install-plugins.sh" || warn "install-plugins.sh failed (non-fatal)"

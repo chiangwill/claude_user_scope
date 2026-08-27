@@ -8,7 +8,8 @@
 
 set -euo pipefail
 
-REPO_DIR="${REPO_DIR:-$HOME/dotclaude}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="${REPO_DIR:-$(dirname "$SCRIPT_DIR")}"
 MARKET_LIST="$REPO_DIR/install/marketplaces.txt"
 PLUGIN_LIST="$REPO_DIR/install/plugins.txt"
 

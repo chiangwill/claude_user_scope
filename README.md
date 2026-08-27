@@ -13,7 +13,7 @@ bash ~/dotclaude/install/bootstrap.sh
 `bootstrap.sh`:
 1. Installs Homebrew + entries from `install/Brewfile` (formulae + casks + taps)
 2. Installs nvm + Node LTS + npm globals
-3. Clones gstack + installs caveman
+3. Clones gstack
 4. Symlinks `~/.claude/*` → `~/dotclaude/*`
 5. Patches `settings.json` with managed hooks + portable permissions (`install/install-hooks.sh`)
 6. Registers marketplaces + installs plugins via `claude` CLI (`install/install-plugins.sh`)
@@ -57,11 +57,10 @@ Add new one: drop `agents/<name>.md`, commit, push. New machine picks it up via 
 
 ## Skills (your own)
 
-Put each skill in `skills/<name>/SKILL.md`. `bootstrap.sh` symlinks each into `~/.claude/skills/<name>` (won't touch gstack/caveman or other third-party skills already installed).
+Put each skill in `skills/<name>/SKILL.md`. `bootstrap.sh` symlinks each into `~/.claude/skills/<name>` (won't touch gstack or other third-party skills already installed).
 
 Third-party skills:
 - `gstack` — update via `/gstack-upgrade` or `cd ~/.claude/skills/gstack && git pull && ./setup`
-- `caveman` — update via `/plugin update caveman@caveman`
 
 ## Known limitations
 
@@ -69,14 +68,13 @@ Third-party skills:
 macOS only. `bootstrap.sh` assumes Homebrew, `pbcopy`, and BSD-flavored `stat`. Linux support is not wired (would need package-manager detection and a parallel install path). Adding it is straightforward but not done because there is no Linux machine in the current rotation.
 
 ### Supply chain
-Three steps pull code over `curl | bash` without checksum pinning:
+Two steps pull code over `curl | bash` without checksum pinning:
 - Homebrew install (`raw.githubusercontent.com/Homebrew/install/HEAD/install.sh`)
-- nvm install (pinned to tag `v0.40.1`, the only one of the three that is pinned)
-- caveman install (`raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh`)
+- nvm install (pinned to tag `v0.40.1`, the only one of the two that is pinned)
 
 If any of these upstream repos gets compromised, bootstrap on a new machine would execute attacker code. Mitigations available if it ever feels worth it:
 - Mirror each install script into this repo and run the local copy
-- Pin Homebrew and caveman install URLs to specific commit hashes
+- Pin the Homebrew install URL to a specific commit hash
 - Verify SHA-256 of the downloaded script before piping to `bash`
 
 For a single-user personal config this is currently an accepted risk.

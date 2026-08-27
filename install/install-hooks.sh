@@ -7,7 +7,8 @@
 
 set -euo pipefail
 
-REPO_DIR="${REPO_DIR:-$HOME/dotclaude}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="${REPO_DIR:-$(dirname "$SCRIPT_DIR")}"
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 SETTINGS="$CLAUDE_DIR/settings.json"
 

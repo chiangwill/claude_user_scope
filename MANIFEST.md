@@ -14,16 +14,14 @@ Snapshot of installed tools. Used by `env-sync` agent to restore on new machines
 | nvm | `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh \| bash` |
 | Claude Code | `npm install -g @anthropic-ai/claude-code` |
 | gstack (skills) | `git clone https://github.com/garrytan/gstack.git ~/.claude/skills/gstack && cd ~/.claude/skills/gstack && ./setup` |
-| caveman (plugin) | `curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh \| bash` |
-| understand-anything (plugin) | Installed via marketplace Lum1104/Understand-Anything |
 
 ## Tracked package lists
 
 - `install/Brewfile` — brew formulae + casks + taps (53 entries, `brew leaves` only)
-- `install/npm-global.txt` — npm globals (8)
+- `install/npm-global.txt` — npm globals (7)
 - `install/claude-skills.txt` — claude skills (57)
-- `install/plugins.txt` — Claude Code plugins (4)
-- `install/marketplaces.txt` — Claude Code marketplaces (6)
+- `install/plugins.txt` — Claude Code plugins (2)
+- `install/marketplaces.txt` — Claude Code marketplaces (4)
 - `install/permissions-allow.txt` — portable `permissions.allow` patterns merged into `settings.local.json` (11)
 
 ## One-shot restore
