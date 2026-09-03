@@ -70,6 +70,24 @@ Put each skill in `skills/<name>/SKILL.md`. `bootstrap.sh` symlinks each into `~
 Third-party skills:
 - `gstack` — update via `/gstack-upgrade` or `cd ~/.claude/skills/gstack && git pull && ./setup`
 
+  ⚠️ On 2026-09-02 the 35 unused gstack wrappers below were removed from
+  `~/.claude/skills/` (bodies remain under `skills/gstack/`, so a wrapper is
+  restored by re-symlinking it). **An upgrade reinstalls them — re-remove after
+  running `/gstack-upgrade`:**
+
+  ```
+  ios-clean ios-design-review ios-fix ios-qa ios-sync
+  setup-gbrain sync-gbrain
+  canary land-and-deploy landing-report setup-deploy
+  design-consultation design-html design-review design-shotgun
+  plan-ceo-review plan-design-review plan-devex-review plan-eng-review plan-tune autoplan
+  browse scrape skillify setup-browser-cookies pair-agent open-gstack-browser
+  benchmark benchmark-models office-hours cso devex-review codex retro connect-chrome
+  ```
+
+  They were dropped because none had ever been invoked and each SKILL.md body is
+  20–27k tokens if mis-triggered.
+
 ## Known limitations
 
 ### Platform
