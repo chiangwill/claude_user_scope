@@ -1,4 +1,2 @@
-affaan-m/everything-claude-code
 anthropics/claude-plugins-official
-microsoft/Webwright
 thedotmack/claude-mem

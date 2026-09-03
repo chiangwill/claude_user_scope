@@ -1,5 +1,6 @@
 @anthropic-ai/claude-code
 @colbymchenry/codegraph
+@earendil-works/pi-coding-agent
 @fission-ai/openspec
 corepack
 mcp-chrome-bridge

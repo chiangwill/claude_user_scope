@@ -1,21 +1,26 @@
-tap "homebrew/cask-fonts"
-tap "homebrew/services"
-# Utility to read Word (.doc) files
-brew "antiword"
+tap "hashicorp/tap"
+# Automate deployment, configuration, and upgrading
+brew "ansible"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Container runtimes on MacOS (and Linux) with minimal setup
+brew "colima"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
+# Pack, ship and run any application as a lightweight container
+brew "docker"
+# Isolated development environments using Docker
+brew "docker-compose"
 # Modern, maintained replacement for ls
 brew "eza"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg", link: false
 # TIFF library and utilities
 brew "libtiff"
 # OCR (Optical Character Recognition) engine
 brew "tesseract"
-# Play, record, convert, and stream select audio and video codecs
-brew "ffmpeg", link: false
 # Play, record, convert, and stream many audio and video codecs
 brew "ffmpeg-full", link: true
 # Command-line fuzzy finder written in Go
@@ -28,10 +33,10 @@ brew "ghostscript"
 brew "git"
 # Official GitLab CI runner
 brew "gitlab-runner"
+# Audit git repos for secrets
+brew "gitleaks"
 # Tool for glamorous shell scripts
 brew "gum"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.13"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # Tools and libraries to manipulate images in many formats
@@ -63,11 +68,15 @@ brew "python-tk@3.11"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.10"
 # Interpreted, interactive, object-oriented programming language
+brew "python@3.13"
+# Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
 # SVG rendering tool and library
 brew "resvg"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# Embeddable, persistent key-value store for fast storage
+brew "rocksdb"
 # CLI proxy to minimize LLM token consumption
 brew "rtk"
 # Terminal multiplexer with VT100/ANSI terminal emulation
@@ -76,12 +85,16 @@ brew "screen"
 brew "sevenzip"
 # Generate scripting interfaces to C/C++ code
 brew "swig"
+# Thin wrapper for Terraform e.g. for locking state
+brew "terragrunt"
 # Command-line unarchiving tools supporting multiple formats
 brew "unar"
 # RTF to other formats converter
 brew "unrtf"
 # Vi 'workalike' with many additional features
 brew "vim"
+# Internet file retriever
+brew "wget"
 # Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
 # Shell extension to navigate your filesystem faster
@@ -90,6 +103,10 @@ brew "zoxide"
 brew "zsh"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
+# Terraform
+brew "hashicorp/tap/terraform", trusted: true
+# Terminal-based AI coding assistant
+cask "claude-code"
 cask "font-meslo-lg-nerd-font"
 cask "font-sauce-code-pro-nerd-font"
 cask "font-symbols-only-nerd-font"
@@ -97,5 +114,3 @@ cask "font-symbols-only-nerd-font"
 cask "ghostty"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
-# Open-source version of the X.Org X Window System
-cask "xquartz"

@@ -2,7 +2,7 @@
 
 Snapshot of installed tools. Used by `env-sync` agent to restore on new machines.
 
-**Last updated:** 2026-07-10
+**Last updated:** 2026-09-03
 
 ---
 
@@ -17,11 +17,11 @@ Snapshot of installed tools. Used by `env-sync` agent to restore on new machines
 
 ## Tracked package lists
 
-- `install/Brewfile` — brew formulae + casks + taps (53 entries, `brew leaves` only)
-- `install/npm-global.txt` — npm globals (7)
-- `install/claude-skills.txt` — claude skills (57)
-- `install/plugins.txt` — Claude Code plugins (2)
-- `install/marketplaces.txt` — Claude Code marketplaces (4)
+- `install/Brewfile` — brew formulae + casks + taps (60 entries, `brew leaves` only)
+- `install/npm-global.txt` — npm globals (8)
+- `install/claude-skills.txt` — claude skills (29)
+- `install/plugins.txt` — Claude Code plugins (1)
+- `install/marketplaces.txt` — Claude Code marketplaces (2)
 - `install/permissions-allow.txt` — portable `permissions.allow` patterns merged into `settings.local.json` (11)
 
 ## One-shot restore
@@ -59,7 +59,18 @@ bash ~/dotclaude/install/install-hooks.sh
 
 ## Custom skills (not from marketplace)
 
-None yet. Drop new ones into `~/.claude/skills/<name>/SKILL.md`.
+Tracked in this repo under `skills/`, symlinked into `~/.claude/skills/<name>`:
+
+- `batch-grill-me`
+- `claude-handoff`
+- `dotclaude`
+- `grill-me`
+- `grill-with-docs`
+- `grilling`
+- `handoff`
+- `research`
+
+Add new ones with `bin/add-skill <name>` (creates the dir + symlink).
 
 ## Marketplaces & plugins (Claude Code plugin registry)
 
