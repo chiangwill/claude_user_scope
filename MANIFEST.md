@@ -23,6 +23,7 @@ Snapshot of installed tools. Used by `env-sync` agent to restore on new machines
 - `install/plugins.txt` — Claude Code plugins (1)
 - `install/marketplaces.txt` — Claude Code marketplaces (2)
 - `install/permissions-allow.txt` — portable `permissions.allow` patterns merged into `settings.local.json` (11)
+- `install/permissions-deny.txt` — portable `permissions.deny` patterns merged into `settings.local.json` (1)
 
 ## One-shot restore
 

@@ -102,11 +102,13 @@ add_sessionstart_hook() {
   log "Added SessionStart → $(basename "$script")"
 }
 
-# Merge portable permissions.allow patterns into ~/.claude/settings.local.json.
+# Merge portable permissions.<key> patterns into ~/.claude/settings.local.json.
 # Idempotent (union, drops duplicates). Lines starting with # and blank lines
 # in the source file are ignored.
-merge_permissions_allow() {
-  local list="${1:-$REPO_DIR/install/permissions-allow.txt}"
+# Usage: merge_permissions <allow|deny> [list-file]
+merge_permissions() {
+  local key="$1"
+  local list="${2:-$REPO_DIR/install/permissions-$key.txt}"
   local local_settings="$CLAUDE_DIR/settings.local.json"
 
   [[ -f "$list" ]] || { log "no $list — skip"; return 0; }
@@ -119,35 +121,36 @@ merge_permissions_allow() {
   fi
 
   if [[ ! -f "$local_settings" ]]; then
-    echo '{"permissions":{"allow":[]}}' > "$local_settings"
+    echo '{"permissions":{}}' > "$local_settings"
   fi
 
   local missing
-  missing=$(jq -r --argjson new "$json_array" '
-    ($new - (.permissions.allow // [])) | length
+  missing=$(jq -r --arg k "$key" --argjson new "$json_array" '
+    ($new - (.permissions[$k] // [])) | length
   ' "$local_settings")
 
   if [[ "$missing" -eq 0 ]]; then
-    log "permissions.allow already contains all patterns from $(basename "$list") — skip"
+    log "permissions.$key already contains all patterns from $(basename "$list") — skip"
     return 0
   fi
 
   cp "$local_settings" "$local_settings.bak.$(date +%s)"
   local tmp
   tmp="$(mktemp)"
-  jq --argjson new "$json_array" '
+  jq --arg k "$key" --argjson new "$json_array" '
     .permissions = (.permissions // {})
-    | .permissions.allow = ((.permissions.allow // []) + $new | unique)
+    | .permissions[$k] = ((.permissions[$k] // []) + $new | unique)
   ' "$local_settings" > "$tmp"
 
   if [[ -s "$tmp" ]] && jq -e . "$tmp" >/dev/null 2>&1; then
     mv "$tmp" "$local_settings"
-    log "merged $missing pattern(s) into permissions.allow"
+    log "merged $missing pattern(s) into permissions.$key"
   else
     rm -f "$tmp"
     warn "jq output invalid, settings.local.json untouched"
   fi
 }
+
 
 # ---------- Hooks managed by this repo ----------
 
@@ -158,6 +161,7 @@ add_sessionstart_hook "$REPO_DIR/hooks/dotclaude-nag.sh"        5 "Checking dotc
 add_pretooluse_hook   "Agent" "$REPO_DIR/hooks/agent-budget.js" 5
 
 # ---------- Permissions managed by this repo ----------
-merge_permissions_allow
+merge_permissions allow
+merge_permissions deny
 
 log "Done. Restart Claude Code session for changes to take effect."

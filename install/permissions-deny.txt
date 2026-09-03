@@ -1,0 +1,12 @@
+# Portable permissions.deny patterns, merged into ~/.claude/settings.local.json
+# by install-hooks.sh (union, idempotent).
+#
+# Denying a tool removes it from the model's context entirely, not just from
+# what it may call — so this is also how we keep unused built-in tools from
+# eating context on every session.
+#
+# Format: one Claude Code tool name or permission pattern per line.
+# Lines starting with # and blank lines are ignored.
+
+# ~6k tokens of schema; we don't publish artifacts from the terminal.
+Artifact

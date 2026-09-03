@@ -109,6 +109,7 @@ For a single-user personal config this is currently an accepted risk.
 │   ├── install-plugins.sh
 │   ├── Brewfile
 │   ├── permissions-allow.txt
+│   ├── permissions-deny.txt
 │   ├── npm-global.txt
 │   ├── marketplaces.txt
 │   └── plugins.txt
