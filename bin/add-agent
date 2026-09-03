@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # Create a new subagent in the dotclaude repo.
+# Repo location self-locates from this script, so any clone path/depth works.
 # Usage: add-agent <name>
 set -euo pipefail
 
 name="${1:?usage: add-agent <name>}"
-repo="${REPO_DIR:-$HOME/dotclaude}"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repo="${REPO_DIR:-$(dirname "$script_dir")}"
 file="$repo/agents/$name.md"
 
 if [[ -e "$file" ]]; then

@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # Stage, commit, and push all changes in the dotclaude repo.
+# Repo location self-locates from this script, so any clone path/depth works.
 # Usage: sync [commit message]
 set -euo pipefail
 
-repo="${REPO_DIR:-$HOME/dotclaude}"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repo="${REPO_DIR:-$(dirname "$script_dir")}"
 cd "$repo"
 
 if [[ -z "$(git status --porcelain)" ]]; then

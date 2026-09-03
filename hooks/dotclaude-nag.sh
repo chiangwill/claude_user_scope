@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
-# SessionStart hook: nag when ~/dotclaude has uncommitted changes or
+# SessionStart hook: nag when the dotclaude repo has uncommitted changes or
 # unpushed commits — the most common reason machines drift out of sync.
 #
+# Repo location self-locates from this script, so any clone path/depth works.
+#
 # Triggers when:
-#   - ~/dotclaude/.git exists
+#   - the repo's .git exists
 #   - working tree dirty OR local main is ahead of origin/main
 #   - last nag was >24h ago
 
 set -euo pipefail
 
-REPO="${DOTCLAUDE_REPO:-$HOME/dotclaude}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO="${DOTCLAUDE_REPO:-$(dirname "$SCRIPT_DIR")}"
 NAG_FILE="$HOME/.claude/.last-dotclaude-nag"
 NAG_INTERVAL_HOURS="${DOTCLAUDE_NAG_INTERVAL_HOURS:-24}"
 
@@ -34,7 +37,7 @@ if [[ "$dirty_count" -eq 0 && "$ahead_count" -eq 0 ]]; then
 fi
 
 {
-  echo "📦 ~/dotclaude out of sync:"
+  echo "📦 $REPO out of sync:"
   [[ "$dirty_count" -gt 0 ]] && echo "   - $dirty_count uncommitted file(s)"
   [[ "$ahead_count" -gt 0 ]] && echo "   - $ahead_count unpushed commit(s)"
   echo "   Other machines won't see local changes until you commit + push."

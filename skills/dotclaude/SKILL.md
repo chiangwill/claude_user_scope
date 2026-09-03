@@ -1,13 +1,19 @@
 ---
 name: dotclaude
-description: Manage the user's dotclaude repo (~/dotclaude). Add new subagents or skills with templates and symlinks, commit and push changes, or pull updates from remote. Use when the user types /dotclaude or asks to add/sync/pull custom agent/skill files.
+description: Manage the user's dotclaude repo. Add new subagents or skills with templates and symlinks, commit and push changes, or pull updates from remote. Use when the user types /dotclaude or asks to add/sync/pull custom agent/skill files.
 allowed-tools:
   - Bash
 ---
 
 # dotclaude skill
 
-Wraps shell scripts in `~/dotclaude/bin/` so the user can manage their dotclaude repo with one command.
+Wraps shell scripts in `$REPO/bin/` so the user can manage their dotclaude repo with one command.
+
+`$REPO` is the dotclaude repo. Resolve it at run time — the repo is not always at `~/dotclaude`:
+
+```bash
+REPO=$(dirname "$(dirname "$(readlink -f ~/.claude/skills/dotclaude)")")
+```
 
 ## Subcommands
 
@@ -15,12 +21,12 @@ Parse `ARGUMENTS` (the text after `/dotclaude`). First token = action:
 
 | Command | Runs | Effect |
 |---------|------|--------|
-| `/dotclaude add agent <name>` | `~/dotclaude/bin/add-agent <name>` | Creates `~/dotclaude/agents/<name>.md` with frontmatter template. Agent visible immediately (agents/ is a dir symlink). |
-| `/dotclaude add skill <name>` | `~/dotclaude/bin/add-skill <name>` | Creates `~/dotclaude/skills/<name>/SKILL.md` + symlinks `~/.claude/skills/<name>`. |
-| `/dotclaude sync [msg]` | `~/dotclaude/bin/sync [msg]` | `git add -A && git commit -m "$msg" && git push`. Default msg: `update`. |
-| `/dotclaude pull` | `~/dotclaude/bin/pull` | `git pull` in the repo. |
-| `/dotclaude status` | `cd ~/dotclaude && git status` | Show what's modified. |
-| `/dotclaude evolve` | `~/dotclaude/bin/evolve` | List feedback memories not yet promoted into `~/.claude/CLAUDE.md`, then walk the user through promotion. |
+| `/dotclaude add agent <name>` | `$REPO/bin/add-agent <name>` | Creates `$REPO/agents/<name>.md` with frontmatter template. Agent visible immediately (agents/ is a dir symlink). |
+| `/dotclaude add skill <name>` | `$REPO/bin/add-skill <name>` | Creates `$REPO/skills/<name>/SKILL.md` + symlinks `~/.claude/skills/<name>`. |
+| `/dotclaude sync [msg]` | `$REPO/bin/sync [msg]` | `git add -A && git commit -m "$msg" && git push`. Default msg: `update`. |
+| `/dotclaude pull` | `$REPO/bin/pull` | `git pull` in the repo. |
+| `/dotclaude status` | `cd $REPO && git status` | Show what's modified. |
+| `/dotclaude evolve` | `$REPO/bin/evolve` | List feedback memories not yet promoted into `~/.claude/CLAUDE.md`, then walk the user through promotion. |
 
 ## Examples
 
@@ -42,7 +48,7 @@ Tell the user:
 
 When the user runs `/dotclaude evolve`:
 
-1. Run `~/dotclaude/bin/evolve` — outputs all feedback-type memory files (across ALL projects) not referenced in `~/.claude/CLAUDE.md`. Each entry's path shows which project it came from; project-specific feedback should usually be skipped, only cross-project rules promoted.
+1. Run `$REPO/bin/evolve` — outputs all feedback-type memory files (across ALL projects) not referenced in `~/.claude/CLAUDE.md`. Each entry's path shows which project it came from; project-specific feedback should usually be skipped, only cross-project rules promoted.
 2. For each memory listed, ask the user: **"Promote this to CLAUDE.md? (yes / no / edit)"**
    - **yes** → propose a concise rule to add to CLAUDE.md (in the appropriate section), edit the file, and reference the memory name in a comment so future evolve runs skip it (e.g. `<!-- from memory: prefer-simple-dotfile-sync -->`).
    - **no** → skip; leave the memory as-is.
@@ -61,6 +67,6 @@ Print the table above and exit.
 
 ## Rules
 
-- Never modify files outside `~/dotclaude/`.
+- Never modify files outside `$REPO/`.
 - Never force-push or rewrite history.
 - If `git push` fails (rejected, no remote), report the exact error — don't try `--force`.

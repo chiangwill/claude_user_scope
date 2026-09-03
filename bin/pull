@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # Pull latest changes from remote.
+# Repo location self-locates from this script, so any clone path/depth works.
 # Usage: pull
 set -euo pipefail
 
-repo="${REPO_DIR:-$HOME/dotclaude}"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repo="${REPO_DIR:-$(dirname "$script_dir")}"
 cd "$repo"
 git pull

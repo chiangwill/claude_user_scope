@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # Create a new skill in the dotclaude repo + symlink into ~/.claude/skills/.
+# Repo location self-locates from this script, so any clone path/depth works.
 # Usage: add-skill <name>
 set -euo pipefail
 
 name="${1:?usage: add-skill <name>}"
-repo="${REPO_DIR:-$HOME/dotclaude}"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repo="${REPO_DIR:-$(dirname "$script_dir")}"
 dir="$repo/skills/$name"
 link="$HOME/.claude/skills/$name"
 
