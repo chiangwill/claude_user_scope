@@ -17,9 +17,10 @@ All under `~/.claude/install/`:
 |------|-----------------|
 | `Brewfile` | `brew bundle dump` (formulae + casks + taps, leaves only) |
 | `npm-global.txt` | `npm ls -g --depth=0 --json` → top-level dep names |
-| `claude-skills.txt` | `ls ~/.claude/skills/` (filter dotfiles) |
+| `claude-skills.txt` | `command ls ~/.claude/skills/` (filter dotfiles; `command` avoids the eza alias) |
 | `plugins.txt` | `~/.claude/plugins/installed_plugins.json` |
 | `marketplaces.txt` | `~/.claude/plugins/known_marketplaces.json` |
+| `permissions-deny.txt` | hand-curated `permissions.deny` entries from `~/.claude/settings.local.json` (tools denied on every machine) |
 | `permissions-allow.txt` | hand-curated subset of `~/.claude/settings.local.json` `permissions.allow` (portable patterns only — no session IDs, no ad-hoc one-offs) |
 
 ## Modes
@@ -36,7 +37,8 @@ npm ls -g --depth=0 --json 2>/dev/null \
   | python3 -c "import sys,json; d=json.load(sys.stdin); print('\n'.join(sorted(d.get('dependencies',{}).keys())))" \
   > ~/.claude/install/npm-global.txt
 
-ls ~/.claude/skills/ \
+# `command ls` bypasses the eza alias, which appends "-> target" for symlinked skills
+command ls ~/.claude/skills/ \
   | grep -Ev '^\.|^\.DS_Store$' \
   | sort > ~/.claude/install/claude-skills.txt
 
