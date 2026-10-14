@@ -8,13 +8,13 @@ const setup = (on: any) => on('turn.complete', (_$: any, e: any) => ({ text: e.a
 test('adds a summary line with time, tokens and cache hit', async ($, on) => {
   setup(on)
   const r = await $.turn.complete(turn({}))
-  expect(r.text).toBe('⏱ 5 秒 · 輸入 10.0k · 輸出 800 · cache hit 90%')
+  expect(r.text).toBe('⏱ 5s · input 10.0k · output 800 · cache hit 90%')
 })
 
 test('omits token figures when the turn has no usage', async ($, on) => {
   setup(on)
   const r = await $.turn.complete(turn({ usage: undefined }))
-  expect(r.text).toBe('⏱ 5 秒')
+  expect(r.text).toBe('⏱ 5s')
 })
 
 test('interrupted turn: no extra line', async ($, on) => {

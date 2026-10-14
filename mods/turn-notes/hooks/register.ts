@@ -8,11 +8,11 @@ export const register: Register = on => {
     if (e.agentId || e.isAborted || e.reason !== 'answer') return result
 
     const secs = Math.round(e.durationMs / 1000)
-    const parts = [`⏱ ${secs} 秒`]
+    const parts = [`⏱ ${secs}s`]
     const u = e.usage
     if (u) {
       const total = u.input_tokens + u.cache_read_input_tokens + u.cache_creation_input_tokens
-      parts.push(`輸入 ${k(total)}`, `輸出 ${k(u.output_tokens)}`)
+      parts.push(`input ${k(total)}`, `output ${k(u.output_tokens)}`)
       if (total > 0) parts.push(`cache hit ${Math.round((u.cache_read_input_tokens / total) * 100)}%`)
     }
 
