@@ -1,0 +1,5 @@
+{
+  "name": "turn-notes",
+  "version": "0.1.0",
+  "description": "Prints a one-line summary under each answer (time, tokens, cache hit)"
+}

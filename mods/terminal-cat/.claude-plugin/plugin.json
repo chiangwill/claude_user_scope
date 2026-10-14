@@ -1,0 +1,6 @@
+{
+  "name": "terminal-cat",
+  "version": "0.1.0",
+  "description": "A cat above the prompt that reacts to what Claude is doing; /feed it",
+  "types": "./types/index.d.ts"
+}

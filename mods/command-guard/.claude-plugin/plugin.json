@@ -1,0 +1,5 @@
+{
+  "name": "command-guard",
+  "version": "0.1.0",
+  "description": "Blocks destructive Bash commands blast-radius does not cover (DROP/TRUNCATE, curl | sh, chmod -R 777)"
+}

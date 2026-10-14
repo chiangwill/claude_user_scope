@@ -1,0 +1,5 @@
+{
+  "name": "agent-budget",
+  "version": "0.1.0",
+  "description": "Caps how many subagents one session may start (default 10, override with CLAUDE_AGENT_BUDGET)"
+}

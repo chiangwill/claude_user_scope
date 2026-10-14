@@ -1,0 +1,5 @@
+{
+  "name": "secret-redactor",
+  "version": "0.1.0",
+  "description": "Redacts secrets from tool output before the model sees it"
+}
