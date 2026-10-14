@@ -9,8 +9,8 @@
 #      to this repo (so all machines share the same source via git)
 #
 # Run AFTER cloning this repo (any path/depth works — REPO_DIR self-locates):
-#   git clone git@github.com:chiangwill/claude_user_scope.git ~/dotclaude
-#   bash ~/dotclaude/install/bootstrap.sh
+#   git clone git@github.com:chiangwill/claude_user_scope.git ~/will/dotclaude
+#   bash ~/will/dotclaude/install/bootstrap.sh
 
 set -euo pipefail
 
